@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <h1>Search city to add in subscribion</h1>
+    <form method="get">
+        {% csrf_token %}
+        <div class="box">
+            <div>{{ form.name }}</div>
+            <div>      </div>
+            <div><button type="submit" class="btn btn-success">Search</button></div>
+        </div>
+    </form>
+    {% if city %}
+        <div class="alert alert-warning mt-2">
+            <h3>{{ city }}</h3>
+            <form method="post">
+                <h4>Set notification period:</h4>
+                {% csrf_token %}
+                {{ form2.notification_period }}
+                <button type="submit" class="btn btn-success">Add city to your sub list</button>
+            </form>
+        </div>
+    {% elif fl %}
+        <h3>Input City name</h3>
+    {% else %}
+        <h3>City with this name doesn't exist</h3>
+    {% endif %}
+</div>
+
+{% endblock %}

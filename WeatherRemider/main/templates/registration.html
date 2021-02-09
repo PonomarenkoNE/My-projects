@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <h1> Welcome to WeatherRemider!</h1>
+    <form method="post">
+        Register:<br>
+        {% csrf_token %}
+        {{ form.email }}<br>
+        {{ form.username }}<br>
+        {{ form.password }}<br>
+        {% if fl1 %}
+            Error: such username or email already exists<br>
+        {% endif %}
+        {% if fl2 %}
+            Error: fill all fields<br>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Confirm</button>
+    </form>
+</div>
+
+{% endblock %}

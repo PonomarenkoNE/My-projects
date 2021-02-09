@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#ajax-hidden").hide();
+    var hidden = $( "#ajax-hidden" );
+    var toshow = $( "#ajax-to-show" );
+    $("#ajax-to-show").click( function() {
+        hidden.show();
+        toshow.hide();
+    });
+});
+</script>
+
+
+<div class="container">
+    <h4>Name of city: {{ city }}</h4>
+    <h4>Notification period: {{ notify }}</h4>
+    {% if sub %}
+    <form method="post">
+        <h4>Set notification period:</h4>
+        {% csrf_token %}
+        {{ form.notification_period }}
+        <button type="submit" class="btn btn-success">Set</button>
+    </form>
+    <button class="btn btn-success" id="ajax-to-show">Show info data</button>
+    <div id="ajax-hidden" class="container">
+        {{ data }}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Unfollow</button>
+    </form>
+    {% else %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Follow</button>
+    </form>
+    {% endif %}
+</div>
+
+{% endblock %}

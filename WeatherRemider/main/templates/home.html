@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <center>
+        <h1> Welcome to WeatherRemider!</h1>
+    </center>
+    <form method="post">
+        Log in:<br>
+        {% csrf_token %}
+        {{ form.username }}<br>
+        {{ form.password }}<br>
+        {% if fl %}
+            Error: typo in password or username<br>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Log in</button>
+    </form>
+    <p><strong>-- OR --</strong></p>
+    <p>
+        If you are new user, please register:
+        <a href="{% url 'registration' %}">Registration</a>
+    </p>
+</div>
+
+{% endblock %}

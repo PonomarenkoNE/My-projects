@@ -1,0 +1,2 @@
+web: gunicorn WeatherRemider.wsgi --log-file -
+worker: celery --app=WeatherRemider worker -B --scheduler django -l INFO
