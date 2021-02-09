@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    {% for el in posts %}
+        <div class="alert alert-warning mt-2">
+            <h2><a href="{% url 'profile' el.username.user.username %}">{{ el.username.user.username }}</a></h2>
+            {% if el.photo %}
+                {% load cloudinary %}
+                {% cloudinary el.photo format="jpg" width=300 height=220 %}<br>
+            {% endif %}
+            {{ el.text }}<br>
+            {{ el.date }}<br>
+            <div class="box">
+                <div><form method="post" action="{% url 'like' el.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Like {{ el.like_num }}</button>
+                </form></div>
+                <div><form method="post" action="{% url 'dislike' el.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Dislike {{ el.dislike_num }}</button>
+                </form></div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

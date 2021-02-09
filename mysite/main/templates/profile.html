@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+{% render_bundle 'main' 'js'%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#ajax-hidden").hide();
+    var hidden = $( "#ajax-hidden" );
+    var toshow = $( "#ajax-to-show" );
+    $("#ajax-to-show").click( function() {
+        hidden.show();
+        toshow.hide();
+    });
+});
+</script>
+<div class="container">
+    <br>
+    {% if avatar %}
+        {% load cloudinary %}
+        {% cloudinary avatar format="jpg" width=200 height=150 %}
+    {% endif %}
+    <h2>{{ username }}</h2>
+    {% if fl %}
+        <form method="post" enctype="multipart/form-data" id="ajax-hidden">
+            {% csrf_token %}
+            {{ form.avatar }}
+            <button type="submit" class="btn btn-success">Change avatar</button>
+        </form><br>
+        <button class="btn btn-success" id="ajax-to-show">Change</button>
+        <div class="box">
+        <div><form action="{% url 'addpost' %}" target="_blank">
+            <button class="btn btn-success">+ post</button>
+        </form></div>
+        <div><form action="{% url 'logout' %}">
+            <button class="btn btn-success">Logout</button>
+        </form></div>
+        </div>
+    {% else %}
+        {% if subscribed %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Unfollow</button>
+            </form>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Follow</button>
+            </form>
+        {% endif %}
+    {% endif %}
+    Followers:
+    {% for el in followers %}
+        <a href="{% url 'profile' el.username.user.username %}">{{ el.username.user.username }} </a>
+    {% endfor %}<br>
+    Followed:
+    {% for el in followed %}
+        <a href="{% url 'profile' el.following_user.user.username %}">{{ el.following_user.user.username }}</a>
+    {% endfor %}
+    <center>
+        <h3 >My Posts</h3>
+    </center>
+    <hr class="mt-0 mb-4">
+    {% for el in posts %}
+        <div class="alert alert-warning mt-2">
+            <h2>{{ el.username.user.username }}</h2>
+            {% if el.photo %}
+                {% load cloudinary %}
+                {% cloudinary el.photo format="jpg" width=300 height=220 %}<br>
+            {% endif %}
+            {{ el.text }}<br>
+            {{ el.date }}<br>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
