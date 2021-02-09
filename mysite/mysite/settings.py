@@ -14,14 +14,6 @@ from pathlib import Path
 import django_heroku
 import cloudinary
 
-os.environ['SECRET'] = '010101110'
-os.environ['API_KEY'] = '818354593353545'
-os.environ['API_SECRET'] = 'CD3d3dyHB-4CO8bMWrvlqZgdPNA'
-os.environ['GITHUB_KEY'] = '0a22abf2debe19de278c'
-os.environ['GITHUB_SECRET'] = '3767faa7870ece1d6642f71fe10157060ccd4137'
-os.environ['GOOGLE_KEY'] = '848962423454-14septluh2ppr0ukngdidr2eafkc8f7a.apps.googleusercontent.com'
-os.environ['GOOGLE_SECRET'] = 'CEYbP0FiPtC10UesgjVIF6Xy'
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
